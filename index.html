@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YouTube Link Converter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 text-gray-800 h-screen grid place-items-center">
+    <div class="container mx-auto p-6 max-w-lg">
+      <div class="bg-white shadow-lg rounded-lg p-6">
+        <h2 class="text-2xl font-bold mb-4 text-center text-indigo-600">
+          YouTube Link Converter
+        </h2>
+
+        <div class="mb-4">
+          <label for="inputLink" class="block text-lg font-medium mb-2"
+            >Enter YouTube link:</label
+          >
+          <input
+            type="text"
+            id="inputLink"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            placeholder="https://youtu.be/..."
+          />
+        </div>
+
+        <div class="mb-4">
+          <label for="targetLink" class="block text-lg font-medium mb-2"
+            >Enter Target Link (e.g., ssyoutube.com):</label
+          >
+          <input
+            type="text"
+            id="targetLink"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            placeholder="ssyoutube.com"
+          />
+        </div>
+
+        <div class="flex justify-between mb-4">
+          <button
+            id="convertButton"
+            onclick="convertAndStoreLink()"
+            class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-500 transition"
+          >
+            Convert
+          </button>
+        </div>
+
+        <div class="mb-4">
+          <p id="outputLink" class="text-sm text-gray-600 mb-2"></p>
+          <p
+            id="videoTitle"
+            class="text-sm font-semibold text-gray-800 mb-4"
+          ></p>
+          <button
+            id="details-copy"
+            onclick="copyToClipboard()"
+            class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500 transition hidden"
+          >
+            Copy to Clipboard
+          </button>
+        </div>
+        <h3 id="storedLinksTitle" class="text-xl font-semibold mb-2 hidden">
+          Stored Target Links
+        </h3>
+        <ul id="storedLinks" class="space-y-2"></ul>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
