@@ -1,11 +1,18 @@
 const convertButton = document.getElementById('convertButton');
+const outputLink = document.getElementById('outputLink');
+const inputLinkRef = document.getElementById('inputLink');
+const videoTitleRef = document.getElementById('videoTitle');
+const storedLinksListRef = document.getElementById('storedLinks');
+const storedLinksTitle = document.getElementById('storedLinksTitle');
+const targetLinkRef = document.getElementById('targetLink');
+const outputContainer = document.getElementById('outputContainer');
 async function fetchFile(videoId) {
     const options = {
         method: "GET",
         url: "https://ytstream-download-youtube-videos.p.rapidapi.com/dl",
         params: { id: videoId },
         headers: {
-            "X-RapidAPI-Key": "YOUR_LINK",
+            "X-RapidAPI-Key": "YOUR_RAPID_API_KEY",
             "X-RapidAPI-Host": "ytstream-download-youtube-videos.p.rapidapi.com",
         },
     };
@@ -13,19 +20,21 @@ async function fetchFile(videoId) {
     try {
         const response = await axios.request(options);
         if (response.data.status === "OK") {
+            outputContainer.classList.remove("hidden");
+            inputLinkRef.value = "";
             const videoTitle = response?.data?.title;
             return videoTitle;
         }
     } catch (error) {
-        document.getElementById('outputLink').textContent = "Some error occurred.";
+        outputLink.textContent = "Some error occurred.";
         console.error(error);
     }
 }
 
 async function convertAndStoreLink() {
-    const inputLink = document.getElementById('inputLink').value;
-    const targetLink = document.getElementById('targetLink').value || 'ssyoutube.com';
-    const videoIdMatch = inputLink.match(/youtu\.be\/([^\?]+)/);
+    const inputLink = inputLinkRef.value;
+    const targetLink = targetLinkRef.value || 'ssyoutube.com';
+    const videoIdMatch = inputLink.match(/(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
 
     if (videoIdMatch) {
         const videoId = videoIdMatch[1];
@@ -35,8 +44,9 @@ async function convertAndStoreLink() {
         convertButton.textContent = 'Converting...';
         convertButton.disabled = true;
         const videoTitle = await fetchFile(videoId);
-        document.getElementById('videoTitle').textContent = `Title: ${videoTitle}`;
-        document.getElementById('outputLink').textContent = `Link: ${convertedLink}`;
+        videoTitleRef.textContent = `${videoTitle}`;
+        outputLink.textContent = `${convertedLink}`;
+        outputLink.setAttribute("href", convertedLink);
         convertButton.textContent = 'Convert';
         convertButton.disabled = false;
         if (videoTitle) {
@@ -51,7 +61,8 @@ async function convertAndStoreLink() {
 
 
     } else {
-        document.getElementById('outputLink').textContent = 'Invalid YouTube link. Please try again.';
+        outputLink.textContent = 'Invalid YouTube link. Please try again.';
+        outputLink.style.color = "red";
     }
 }
 
@@ -65,9 +76,9 @@ function storeTargetLink(targetLink) {
 
 function displayStoredLinks() {
     const storedLinks = JSON.parse(localStorage.getItem('targetLinks')) || [];
-    const storedLinksList = document.getElementById('storedLinks');
-    if (storedLinksList?.length) {
-        document.getElementById('storedLinksTitle').classList.remove('hidden');
+    const storedLinksList = storedLinksListRef;
+    if (storedLinks?.length) {
+        storedLinksTitle.classList.remove('hidden');
     }
     storedLinksList.innerHTML = '';
 

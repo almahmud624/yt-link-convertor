@@ -20,19 +20,19 @@
           <input
             type="text"
             id="inputLink"
-            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            class="w-full px-2 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
             placeholder="https://youtu.be/..."
           />
         </div>
 
         <div class="mb-4">
           <label for="targetLink" class="block text-lg font-medium mb-2"
-            >Enter Target Link (e.g., ssyoutube.com):</label
+            >Enter Target Link:</label
           >
           <input
             type="text"
             id="targetLink"
-            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            class="w-full px-2 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
             placeholder="ssyoutube.com"
           />
         </div>
@@ -48,17 +48,32 @@
         </div>
 
         <div class="mb-4">
-          <p id="outputLink" class="text-sm text-gray-600 mb-2"></p>
-          <p
-            id="videoTitle"
-            class="text-sm font-semibold text-gray-800 mb-4"
-          ></p>
+          <div id="outputContainer" class="flex gap-2 hidden">
+            <table class="w-full text-left border-collapse">
+              <tr class="border-b-2 border-gray-200">
+                <th class="py-2 px-4 align-top font-semibold">Title</th>
+                <td class="py-2 px-4 text-gray-800" id="videoTitle"></td>
+              </tr>
+              <tr>
+                <th class="py-2 px-4 align-top font-semibold">Link</th>
+                <td class="py-2 px-4">
+                  <a
+                    href=""
+                    target="_blank"
+                    id="outputLink"
+                    class="text-blue-600"
+                  >
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </div>
           <button
             id="details-copy"
             onclick="copyToClipboard()"
-            class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500 transition hidden"
+            class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500 transition mt-4 hidden"
           >
-            Copy to Clipboard
+            Copy Details
           </button>
         </div>
         <h3 id="storedLinksTitle" class="text-xl font-semibold mb-2 hidden">
